@@ -12,12 +12,12 @@ export class TaskService {
     return this.tasks;
   }
 
-  getTaskById(id:string):Task {
+  getTaskById(id: string): Task {
     return this.tasks.find(task => task.id === id);
   }
 
-  crateTask(CreateTaskDto: CreateTaskDto):Task {
-    const {title, description} = CreateTaskDto;
+  crateTask(CreateTaskDto: CreateTaskDto): Task {
+    const { title, description } = CreateTaskDto;
     const task: Task = {
       id: uuid(),
       title,
@@ -28,12 +28,19 @@ export class TaskService {
     return task;
   }
 
-  // updateTaskStatusById(id,TaskStatus){
-  //   const toUpdate = this.tasks.map(task => task.id === id);
-  //   this.tasks.s
-  // }
-  deleteById(id:string){
+  updateTaskStatusById(id, TaskStatus) {
+    let changes: Task;
+    this.tasks.map((task) => {
+      if (task.id === id) {
+        task.status = TaskStatus;
+        changes = task;
+      }
+    });
+    return changes;
+  }
+
+  deleteById(id: string) {
     const toDelete = this.tasks.findIndex(task => task.id === id);
-    return this.tasks.splice(toDelete,1);
+    return this.tasks.splice(toDelete, 1);
   }
 }
