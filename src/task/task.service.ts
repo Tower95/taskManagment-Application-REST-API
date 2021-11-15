@@ -2,9 +2,25 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from '../dto/create-task.dto';
+import { TaskRespository } from './task.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Task } from './task.entity';
 
 @Injectable()
 export class TaskService {
+  constructor(
+  @InjectRepository(TaskRespository)  
+  private taskRespository:TaskRespository
+  ){}
+
+  async getTaskByID(id:string): Promise<Task> {
+    const found = await this.taskRespository.findOne(id);
+    if(!found){
+      throw new NotFoundException(`the Task with the ID: ${id} don't found `);
+    }
+    return found;
+  }
+
   // private tasks: Task[] = [];
 
   // getAllTasks(): Task[] {
