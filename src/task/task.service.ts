@@ -5,6 +5,8 @@ import { CreateTaskDto } from '../dto/create-task.dto';
 import { TaskRespository } from './task.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
+import { UpdateTaskStatuskDto } from '../dto/update-task-dto';
+import { GetTaskFilterDto } from '../dto/get-task-filter.dto';
 
 @Injectable()
 export class TaskService {
@@ -25,13 +27,17 @@ export class TaskService {
     return this.taskRespository.createTask(CreateTaskDto);
   }
 
+  getTasks(filterDto:GetTaskFilterDto):Promise<Task[]>{
+    return this.taskRespository.getTasks(filterDto);
+  }
+
   // private tasks: Task[] = [];
 
   // getAllTasks(): Task[] {
   //   return this.tasks;
   // }
 
- 
+
   // updateTaskStatusById(id, TaskStatus) {
   // let changes: Task;
   // this.tasks.map((task) => {
@@ -45,9 +51,17 @@ export class TaskService {
   //   return changes;
   // }
 
-  // deleteById(id: string) {
-  //   const found = this.getTaskById(id);
-  //   const toDelete = this.tasks.findIndex(task => task.id === found.id);
-  //   return this.tasks.splice(toDelete, 1);
-  // }
+  async updateTaskStatusById(id:string,status:TaskStatus):Promise<Task>{
+    const task =  await this.getTaskByID(id);
+    task.status = status;
+    await this.taskRespository.save(task);
+    return task;
+  }
+
+
+  async deleteById(id: string): Promise<Task> {
+    const task = await this.getTaskByID(id);
+    this.taskRespository.delete({ id: task.id });
+    return task;
+  }
 }

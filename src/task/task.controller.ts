@@ -29,17 +29,15 @@ export class TaskController {
   //   return tasks;
   // }
 
-  // @Get()
-  // getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
-  //   if (Object.keys(filterDto).length) {
-  //     return this.getTaskWithFilters(filterDto);
-  //   } else {
-  //     return this.TaskService.getAllTasks();
-  //   }
-  // }
+  @Get()
+  getTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
+
+    return this.TaskService.getTasks(filterDto);
+
+  }
 
   @Get(':id')
-  GetTaskById(@Param('id') id:string):Promise<Task>{
+  GetTaskById(@Param('id') id: string): Promise<Task> {
     return this.TaskService.getTaskByID(id);
   }
 
@@ -48,17 +46,17 @@ export class TaskController {
     return this.TaskService.createTask(CreateTaskDto);
   }
 
- 
 
-  // @Put(':id/status')
-  // updateTaskById(@Param('id') id: string, @Body() UpdateTaskStatusDto: UpdateTaskStatuskDto): Task {
-  //   const { status } = UpdateTaskStatusDto;
-  //   console.log(status);
-  //   return this.TaskService.updateTaskStatusById(id, status);
-  // }
 
-  // @Delete(':id')
-  // deleteTask(@Param('id') id: string) {
-  //   return this.TaskService.deleteById(id);
-  // }
+  @Put(':id/status')
+  updateTaskById(@Param('id') id: string, @Body() UpdateTaskStatusDto: UpdateTaskStatuskDto): Promise<Task> {
+    const { status } = UpdateTaskStatusDto;
+    console.log(status);
+    return this.TaskService.updateTaskStatusById(id, status);
+  }
+
+  @Delete(':id')
+  deleteTask(@Param('id') id: string) {
+    return this.TaskService.deleteById(id);
+  }
 }
