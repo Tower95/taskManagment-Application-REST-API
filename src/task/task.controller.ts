@@ -46,8 +46,6 @@ export class TaskController {
     return this.TaskService.createTask(CreateTaskDto);
   }
 
-
-
   @Put(':id/status')
   updateTaskById(@Param('id') id: string, @Body() UpdateTaskStatusDto: UpdateTaskStatuskDto): Promise<Task> {
     const { status } = UpdateTaskStatusDto;

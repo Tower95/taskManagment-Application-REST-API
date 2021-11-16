@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TaskModule } from './task/task.module';
 //import typeorm after isntall it and the nestjs package and pg
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     TaskModule,
@@ -15,7 +16,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'task-management',
       autoLoadEntities: true,
       synchronize: true,
-    })
+    }),
+    AuthModule
   ]
 })
 export class AppModule { }
