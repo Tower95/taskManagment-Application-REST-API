@@ -9,26 +9,6 @@ import { Task } from './task.entity';
 export class TaskController {
   constructor(private TaskService: TaskService) { }
 
-  // private getTaskWithFilters(filterDto: GetTaskFilterDto): Task[] {
-  //   const { status, search } = filterDto
-
-  //   let tasks = this.TaskService.getAllTasks();
-  //   if (status) {
-  //     tasks = tasks.filter(task => task.status === status);
-  //   }
-  //   if (search) {
-  //     tasks = tasks.filter((task) => {
-  //       if (task.title.toLowerCase().includes(search) || task.description.includes(search)) {
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     }
-  //     );
-  //   }
-  //   return tasks;
-  // }
-
   @Get()
   getTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
 
