@@ -9,9 +9,14 @@ export class AuthController {
     private authService: AuthService
   ) { }
 
-  @Post('/singup')
-  singUp(@Body() credential: AuthCredentialDto) {
-    return this.authService.singUp(credential);
+  @Post('/signup')
+  singUp(@Body() credential: AuthCredentialDto): Promise<void> {
+    return this.authService.signUp(credential);
   }
-  
+
+  @Post('/signin')
+  signIn(@Body() credential: AuthCredentialDto): Promise<string> {
+    return this.authService.signIn(credential);
+  }
+
 }

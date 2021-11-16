@@ -30,7 +30,7 @@ export class UserRespository extends Repository<User>{
     return;
   }
 
-  async encrypt(data:any){
+  async encrypt(data:any):Promise<any>{
     const salt = await bcrypt.genSalt();
     const hashedData = await bcrypt.hash(data,salt)
     return hashedData;
