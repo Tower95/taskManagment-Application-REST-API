@@ -11,6 +11,7 @@ import { User } from '../auth/user.entity';
 
 @Injectable()
 export class TaskService {
+  
   constructor(
     @InjectRepository(TaskRespository)
     private taskRespository: TaskRespository
@@ -32,32 +33,9 @@ export class TaskService {
     return this.taskRespository.getTasks(filterDto, user);
   }
 
-  // private tasks: Task[] = [];
-
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
-  // }
-
-
-  // updateTaskStatusById(id, TaskStatus,user:User) {
-  // let changes: Task;
-  // this.tasks.map((task) => {
-  //   if (task.id === id) {
-  //     task.status = TaskStatus;
-  //     changes = task;
-  //   }
-  // });
-  //   const changes = this.getTaskById(id);
-  //   changes.status = TaskStatus;
-  //   return changes;
-  // }
 
   async updateTaskStatusById(id: string, status: TaskStatus, user: User): Promise<Task> {
     const task = await this.getTaskByID(id,user);
-    // const findedOnMyTask = user.tasks.find(item => item.id == task.id);
-    // if (!findedOnMyTask){
-    //   throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    // }
     task.status = status; 
     await this.taskRespository.save(task);
     return task;
