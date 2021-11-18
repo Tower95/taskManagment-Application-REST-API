@@ -7,7 +7,10 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [TaskController],
-  imports: [TypeOrmModule.forFeature([TaskRespository]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([TaskRespository]),
+    AuthModule
+  ],
   providers: [TaskService]
 })
 export class TaskModule { }
